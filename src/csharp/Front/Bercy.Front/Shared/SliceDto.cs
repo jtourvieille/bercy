@@ -1,4 +1,4 @@
-﻿namespace Bercy.RestApi.Dtos
+﻿namespace Bercy.Front.Shared
 {
     /// <summary>
     /// Slice definition

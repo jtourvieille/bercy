@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bercy\Bercy.csproj" />
+    <ProjectReference Include="..\Front\Bercy.Front\Shared\Bercy.Front.Shared.csproj" />
   </ItemGroup>
 
 

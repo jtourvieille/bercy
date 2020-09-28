@@ -3,7 +3,7 @@
 namespace Bercy.RestApi.Controllers
 {
     using AutoMapper;
-    using Dtos;
+    using Front.Shared;
 
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]

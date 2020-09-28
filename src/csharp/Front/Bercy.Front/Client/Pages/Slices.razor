@@ -1,0 +1,64 @@
+﻿@page "/slices"
+@using Bercy.Front.Shared
+@inject HttpClient Http
+
+    <h3>Tranches</h3>
+
+@if (slices == null || slices.Count == 0)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>
+        Sélectionnez l'année
+        <select @onchange="UpdateSelectedYear">
+            @foreach (var yearToCover in yearsToCover)
+            {
+                <option value=@yearToCover>@yearToCover</option>
+            }
+        </select>
+    </p>
+    <br />
+    
+    <RadzenGrid Data="@slices[currentYear]" TItem="SliceDto" ColumnWidth="200px">
+        <Columns>
+            <RadzenGridColumn TItem="SliceDto" Property="Low" Title="De">
+                <Template Context="data">
+                    @String.Format("{0} €", data.Low)
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="SliceDto" Property="High" Title="A">
+                <Template Context="data">
+                    @String.Format("{0} €", data.High)
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="SliceDto" Property="Rate" Title="Pourcentage">
+                <Template Context="data">
+                    @String.Format("{0} %", data.Rate)
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+}
+
+@code {
+    private readonly IDictionary<string, SliceDto[]> slices = new Dictionary<string, SliceDto[]>();
+
+    private readonly List<string> yearsToCover = new List<string> { "2019", "2020" };
+
+    private string currentYear = "2019";
+
+    protected override async Task OnInitializedAsync()
+    {
+        foreach (var year in yearsToCover)
+        {
+            slices.Add(year, await Http.GetFromJsonAsync<SliceDto[]>($"https://localhost:44342/api/v1.0/Slices?year={year}"));
+        }
+    }
+
+    private void UpdateSelectedYear(ChangeEventArgs e)
+    {
+        currentYear = e.Value.ToString();
+    }
+}

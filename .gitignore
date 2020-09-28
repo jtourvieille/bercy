@@ -29,3 +29,9 @@ yarn-error.log*
 /src/csharp/Bercy.RestApi/bin/Debug/netcoreapp3.1
 /src/csharp/Bercy.RestApi.Tests/bin/Debug/netcoreapp3.1
 /src/csharp/Bercy.RestApi.Tests/obj
+/src/csharp/Front/Bercy.Front/Client/bin
+/src/csharp/Front/Bercy.Front/Client/obj
+/src/csharp/Front/Bercy.Front/Server/bin
+/src/csharp/Front/Bercy.Front/Server/obj
+/src/csharp/Front/Bercy.Front/Shared/bin
+/src/csharp/Front/Bercy.Front/Shared/obj

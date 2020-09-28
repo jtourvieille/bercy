@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using Dtos;
+    using Front.Shared;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 

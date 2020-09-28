@@ -1,7 +1,7 @@
 ﻿namespace Bercy.RestApi
 {
     using AutoMapper;
-    using Dtos;
+    using Front.Shared;
     using Slices;
 
     public class AutoMapperProfile : Profile

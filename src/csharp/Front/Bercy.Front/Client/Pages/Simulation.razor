@@ -1,0 +1,110 @@
+﻿@page "/simulation"
+@using Radzen
+@using System.Globalization
+@using Bercy.Front.Client.Models
+@inject HttpClient Http
+@inject NotificationService NotificationService
+
+<h3>Simulation</h3>
+
+<RadzenTemplateForm Data="@model" Submit="@((SimulationModel args) => { Submit(args); })">
+    <RadzenFieldset Text="Simulation">
+        <div class="row" style="margin-bottom: 48px">
+            <div class="col-md-4 align-items-center d-flex">
+                <RadzenLabel Text="Année" />
+            </div>
+            <div class="col-md-8">
+                <RadzenDropDown @bind-Value="model.Year" Data="@yearsToCover" style="width: 100%;" Name="Year">
+                </RadzenDropDown>
+                <RadzenNumericRangeValidator Component="Year" Min="0" Max="@int.MaxValue" Text="L'année doit être positive" Style="position: absolute" Popup="true" />
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 48px">
+            <div class="col-md-4 align-items-center d-flex">
+                <RadzenLabel Text="Salaire annuel" />
+            </div>
+            <div class="col-md-8">
+                <RadzenNumeric style="display: block" Placeholder="Salaire..." @bind-Value="model.Wage" Name="Wage" />
+                <RadzenNumericRangeValidator Component="Wage" Min="0" Max="@int.MaxValue" Text="Le salaire doit être positif" Style="position: absolute" Popup="true" />
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 48px">
+            <div class="col-md-4 align-items-center d-flex">
+                <RadzenLabel Text="Nombre d'adulte(s) dans le foyer" />
+            </div>
+            <div class="col-md-8">
+                <RadzenNumeric style="display: block" Placeholder="Nombre d'adultes..." @bind-Value="model.NbAdults" Name="NbAdults" />
+                <RadzenNumericRangeValidator Component="NbAdults" Min="1" Max="2" Text="1 ou 2 adultes possible" Style="position: absolute" Popup="true" />
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 48px">
+            <div class="col-md-4 align-items-center d-flex">
+                <RadzenLabel Text="Nombre d'enfant(s) dans le foyer" />
+            </div>
+            <div class="col-md-8">
+                <RadzenNumeric style="display: block" Placeholder="Nombre d'enfants..." @bind-Value="model.NbChildren" Name="NbChildren" />
+                <RadzenNumericRangeValidator Component="NbChildren" Min="0" Max="101" Text="101 enfants maximum" Style="position: absolute" Popup="true" />
+            </div>
+        </div>
+    </RadzenFieldset>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="calculate" Text="Go" />
+        </div>
+    </div>
+    @if (showResult)
+    {
+        <RadzenCard Style="margin-bottom: 20px; margin-top: 20px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <RadzenFieldset Text="Rappel des critères">
+                        <div class="row">
+                            <div class="col-md-4 align-items-center d-flex">
+                                <RadzenLabel Text="Année" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenLabel Text="@model.Year.ToString(CultureInfo.InvariantCulture)" style="font-weight: bold" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 align-items-center d-flex">
+                                <RadzenLabel Text="Salaire annuel" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenLabel Text="@model.Wage.ToString(CultureInfo.InvariantCulture)" style="font-weight: bold" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 align-items-center d-flex">
+                                <RadzenLabel Text="Nombre d'adulte(s) dans le foyer" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenLabel Text="@model.NbAdults.ToString()" style="font-weight: bold" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 align-items-center d-flex">
+                                <RadzenLabel Text="Nombre d'enfant(s) dans le foyer" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenLabel Text="@model.NbChildren.ToString()" style="font-weight: bold" />
+                            </div>
+                        </div>
+                    </RadzenFieldset>
+                </div>
+                <div class="col-md-6">
+                    <RadzenFieldset Text="Répartition">
+                        <div class="row">
+                            <RadzenChart>
+                                <RadzenPieSeries Data="@repartition" Title="Résultat" CategoryProperty="Name" ValueProperty="Value" />
+                            </RadzenChart>
+                        </div>
+                    </RadzenFieldset>
+                </div>
+            </div>
+        </RadzenCard>
+    }
+</RadzenTemplateForm>
+
+
+
